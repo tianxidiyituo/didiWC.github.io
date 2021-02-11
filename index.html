@@ -1,94 +1,42 @@
-<!DOCTYPE html> 
-<html xmlns="http://www.w3.org/1999/xhtml"> 
-<head> 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<title></title> 
- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoeA9wWpE6hOgXNdyGlIaz4iQiehoetaE&libraries=places"></script>
-<script type="text/javascript"> 
-function callback(results, status) {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
-          }
+<!DOCTYPE html>
+
+<html>
+
+<body>
+
+
+<button onclick="getLocation()">找厕所</button>
+
+<script>
+
+    var x=document.getElementById("demo");
+
+    function getLocation()
+
+    {
+
+        if (navigator.geolocation)
+
+        {
+
+            navigator.geolocation.getCurrentPosition(showPosition);
+
         }
- }
-  function createMarker(place) {
-        var placeLoc = place.geometry.location;
-        var marker = new google.maps.Marker({
-          map: map,
-          position: place.geometry.location
-        });
 
+        else{x.innerHTML="Geolocation is not supported by this browser.";}
 
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent(place.name);
-          infowindow.open(map, this);
-        });
-      }
-  var map;
-      var infowindow;
+    }
 
+    function showPosition(position)
 
+    {
 
+        x.innerHTML="https://map.baidu.com/mobile/webapp/search/search/qt=s&wd=%E5%8E%95%E6%89%80&c=191&searchFlag=bigBox&version=5&exptype=dep&src_from=webapp_all_bigbox&sug_forward=&src=0&nb_x= " + position.coords.latitude +
 
- 
-function init() { 
-if (navigator.geolocation) { 
-//获取当前地理位置 
-navigator.geolocation.getCurrentPosition(function (position) { 
-var coords = position.coords; 
-//console.log(position); 
-//指定一个google地图上的坐标点，同时指定该坐标点的横坐标和纵坐标 
-var latlng = new google.maps.LatLng(coords.latitude, coords.longitude); 
-var myOptions = { 
-zoom: 14, //设定放大倍数 
-center: latlng, //将地图中心点设定为指定的坐标点 
-mapTypeId: google.maps.MapTypeId.ROADMAP //指定地图类型 
-,showOnLoad : true
-}; 
-//创建地图，并在页面map中显示 
- map = new google.maps.Map(document.getElementById("map"), myOptions); 
-infowindow = new google.maps.InfoWindow();
+            "&nb_y=" + position.coords.longitude +"&center_rank=1/vt=/?fromhash=1"
 
+    }
 
+</script>
 
-
-var service = new google.maps.places.PlacesService(map);
-service.nearbySearch({
-  location: latlng,
-  radius: 2000,
-  type: ['store']
-},callback);
-
-
- 
- 
-//打开提示窗口  
-}, 
-function (error) { 
-//处理错误 
-switch (error.code) { 
-case 1: 
-alert("位置服务被拒绝。"); 
-break; 
-case 2: 
-alert("暂时获取不到位置信息。"); 
-break; 
-case 3: 
-alert("获取信息超时。"); 
-break; 
-default: 
-alert("未知错误。"); 
-break; 
-} 
-}); 
-} else { 
-alert("你的浏览器不支持HTML5来获取地理位置信息。"); 
-} 
-} 
-</script> 
-</head> 
-<body οnlοad="init()"> 
-<div id="map" style="width: 100%; height: 600px"></div> 
-</body> 
-</html> 
+</body>
